@@ -8,3 +8,4 @@ Makefile
 html/
 Vagrantfile
 .vagrant
+projects/
