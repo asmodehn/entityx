@@ -458,7 +458,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
   ptr<C> assign(Entity::Id id, ptr<C> component) {
     ptr<BaseComponent> base(static_pointer_cast<BaseComponent>(component));
     accomodate_component(C::family());
-    entity_components_[C::family()][id.index()] = base;
+    entity_components_[static_cast<int>(C::family())][id.index()] = base;
     entity_component_mask_[id.index()] |= uint64_t(1) << C::family();
 
     event_manager_->emit<ComponentAddedEvent<C>>(Entity(shared_from_this(), id), component);
@@ -484,8 +484,8 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
    */
   template <typename C>
   ptr<C> remove(const Entity::Id &id) {
-    ptr<C> component(static_pointer_cast<C>(entity_components_[C::family()][id.index()]));
-    entity_components_[C::family()][id.index()].reset();
+    ptr<C> component(static_pointer_cast<C>(entity_components_[static_cast<unsigned int>(C::family())][id.index()]));
+	entity_components_[static_cast<unsigned int>(C::family())][id.index()].reset();
     entity_component_mask_[id.index()] &= ~(uint64_t(1) << C::family());
     if (component)
       event_manager_->emit<ComponentRemovedEvent<C>>(Entity(shared_from_this(), id), component);
@@ -503,7 +503,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
     if (C::family() >= entity_components_.size()) {
       return ptr<C>();
     }
-    ptr<BaseComponent> c = entity_components_[C::family()][id.index()];
+    ptr<BaseComponent> c = entity_components_[static_cast<unsigned int>(C::family())][id.index()];
     return ptr<C>(static_pointer_cast<C>(c));
   }
 
@@ -563,7 +563,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
   template <typename C>
   ComponentMask component_mask() {
     ComponentMask mask;
-    mask.set(C::family());
+    mask.set(static_cast<int>(C::family()));
     return mask;
   }
 
@@ -594,7 +594,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
 
   inline void accomodate_component(BaseComponent::Family family) {
     if (entity_components_.size() <= family) {
-      entity_components_.resize(family + 1);
+      entity_components_.resize(static_cast<unsigned int>(family) + 1);
       for (auto &components : entity_components_) {
           components.resize(index_counter_);
       }
