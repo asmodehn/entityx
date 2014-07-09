@@ -17,8 +17,10 @@ LOCAL_SRC_FILES :=    	entityx/deps/Dependencies.cc\
 
 LOCAL_CFLAGS += -fvisibility=hidden
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_C_INCLUDES :=	$(LOCAL_PATH)\
+					$(LOCAL_PATH)/Android
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES :=	$(LOCAL_PATH)\
+							$(LOCAL_PATH)/Android
 
 include $(BUILD_STATIC_LIBRARY)
