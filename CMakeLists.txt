@@ -29,10 +29,10 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	# /FS - Allows multiple cl.exe processes to write to the same .pdb file
 	# /DEBUG - Enable debug during linking
 	# /Od - Disables optimization
-	set(CMAKE_CXX_FLAGS_DEBUG "/Zi /FS /DDEBUG /Od /MDd")
+	set(CMAKE_CXX_FLAGS_DEBUG "/Z7 /FS /DDEBUG /Od /MDd")
 	# /Ox - Full optimization
 	set(CMAKE_CXX_FLAGS_RELEASE "/Ox /DNDEBUG /MD")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ox /Zi /FS /DEBUG")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ox /Z7 /FS /DEBUG")
 endif()
 
 # C++11 feature checks
@@ -113,10 +113,10 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	# /FS - Allows multiple cl.exe processes to write to the same .pdb file
 	# /DEBUG - Enable debug during linking
 	# /Od - Disables optimization
-	set(CMAKE_CXX_FLAGS_DEBUG "/Zi /FS /DDEBUG /Od /MDd")
+	set(CMAKE_CXX_FLAGS_DEBUG "/Z7 /FS /DDEBUG /Od /MDd")
 	# /Ox - Full optimization
 	set(CMAKE_CXX_FLAGS_RELEASE "/Ox /DNDEBUG /MD")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ox /Zi /FS /DDEBUG")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ox /Z7 /FS /DDEBUG")
 endif()
 
 # Things to install
