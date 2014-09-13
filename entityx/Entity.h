@@ -459,7 +459,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
     ptr<BaseComponent> base(static_pointer_cast<BaseComponent>(component));
     accomodate_component(C::family());
     entity_components_[static_cast<int>(C::family())][id.index()] = base;
-    entity_component_mask_[id.index()].set(C::family());
+	entity_component_mask_[id.index()].set(static_cast<int>(C::family()));
 
     event_manager_->emit<ComponentAddedEvent<C>>(Entity(shared_from_this(), id), component);
     return component;
@@ -486,7 +486,7 @@ class EntityManager : entityx::help::NonCopyable, public enable_shared_from_this
   ptr<C> remove(const Entity::Id &id) {
     ptr<C> component(static_pointer_cast<C>(entity_components_[static_cast<unsigned int>(C::family())][id.index()]));
 	entity_components_[static_cast<unsigned int>(C::family())][id.index()].reset();
-    entity_component_mask_[id.index()].reset(C::family());
+	entity_component_mask_[id.index()].reset(static_cast<int>(C::family()));
     if (component)
       event_manager_->emit<ComponentRemovedEvent<C>>(Entity(shared_from_this(), id), component);
     return component;
